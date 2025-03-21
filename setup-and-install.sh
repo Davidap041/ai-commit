@@ -20,3 +20,5 @@ EOL
 chmod 600 "$(dirname "$0")/secrets.js"
 
 echo "secrets.js file has been created successfully!"
+
+npm install  -g .
