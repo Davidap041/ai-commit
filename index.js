@@ -22,8 +22,21 @@ console.log("Ai provider: ", AI_PROVIDER);
 
 const ENDPOINT = args.ENDPOINT || process.env.ENDPOINT;
 
-// Remove OpenAI API key check and add Gemini check
-const apiKey = args.apiKey || process.env.GOOGLE_API_KEY;
+// Handle API keys for different providers
+let apiKey;
+if (AI_PROVIDER === 'openai') {
+  apiKey = args.apiKey || process.env.AI_COMMIT_API_KEY;
+  if (!apiKey) {
+    console.error('Error: OpenAI API key not found. Please set AI_COMMIT_API_KEY environment variable.');
+    process.exit(1);
+  }
+} else if (AI_PROVIDER === 'gemini') {
+  apiKey = args.apiKey || process.env.GOOGLE_API_KEY;
+  if (!apiKey) {
+    console.error('Error: Google API key not found. Please set GOOGLE_API_KEY environment variable.');
+    process.exit(1);
+  }
+}
 
 const language = args.language || process.env.AI_COMMIT_LANGUAGE || "english";
 

@@ -6,16 +6,18 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "publish:major": "npm version major && npm publish --access public",
-    "ollama": "PROVIDER=ollama node index.js",
-    "gemini": "PROVIDER=gemini node index.js"
+    "publish:major:local": "npm version major --no-git-tag-version",
+    "start": "node -r dotenv/config index.js",
+    "dev": "node -r dotenv/config index.js",
+    "postinstall": "chmod +x ./index.js && echo \"AI-Commit installed globally! Use 'ai-commit' command from anywhere.\""
   },
   "bin": {
     "ai-commit": "./index.js"
   },
+  "preferGlobal": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/insulineru/ai-commit.git"
+    "url": "git+https://github.com/davipaiva/ai-commit.git"
   },
   "keywords": [
     "ai",
@@ -25,16 +27,17 @@
     "conventional",
     "commits"
   ],
-  "author": "Insuline.ru <insuline.ru@gmail.com>",
+  "author": "Davi Paiva",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/insulineru/ai-commit/issues"
+    "url": "https://github.com/davipaiva/ai-commit/issues"
   },
-  "homepage": "https://github.com/insulineru/ai-commit#readme",
+  "homepage": "https://github.com/davipaiva/ai-commit#readme",
   "dependencies": {
     "chatgpt": "^5.0.0",
     "dotenv": "^16.0.3",
     "gpt-3-encoder": "^1.1.4",
-    "inquirer": "^9.1.4"
+    "inquirer": "^9.1.4",
+    "@google/generative-ai": "^0.2.0"
   }
 }
