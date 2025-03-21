@@ -100,6 +100,8 @@ const generateSingleCommit = async (diff) => {
       commitMessage: finalCommitMessage,
     });
 
+    // Remove this line as it's removing useful markdown formatting from console output
+    
     console.log(
       `Proposed Commit With Template:\n------------------------------\n${finalCommitMessage}\n------------------------------`
     );
