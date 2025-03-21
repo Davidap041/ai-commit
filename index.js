@@ -9,7 +9,7 @@ import { AI_PROVIDER, MODEL, args } from "./config.js";
 import openai from "./openai.js";
 import ollama from "./ollama.js";
 import gemini from "./gemini.js";
-
+import { secrets } from "./secrets.js"; // Import secrets configuration
 const PROVIDER_SUPPORT = {
   openai,
   ollama,
@@ -20,38 +20,31 @@ const REGENERATE_MSG = "♻️ Regenerate Commit Messages";
 
 console.log("Ai provider: ", AI_PROVIDER);
 
-const ENDPOINT = args.ENDPOINT || process.env.ENDPOINT;
+const ENDPOINT = args.ENDPOINT || secrets.ENDPOINT;
 
-// Handle API keys for different providers
+// Handle API keys from secrets configuration
 let apiKey;
 if (AI_PROVIDER === 'openai') {
-  apiKey = args.apiKey || process.env.AI_COMMIT_API_KEY;
+  apiKey = args.apiKey || secrets.AI_COMMIT_API_KEY;
   if (!apiKey) {
-    console.error('Error: OpenAI API key not found. Please set AI_COMMIT_API_KEY environment variable.');
+    console.error('Error: OpenAI API key not found in secrets configuration.');
     process.exit(1);
   }
 } else if (AI_PROVIDER === 'gemini') {
-  apiKey = args.apiKey || process.env.GOOGLE_API_KEY;
+  apiKey = args.apiKey || secrets.GOOGLE_API_KEY;
   if (!apiKey) {
-    console.error('Error: Google API key not found. Please set GOOGLE_API_KEY environment variable.');
+    console.error('Error: Google API key not found in secrets configuration.');
     process.exit(1);
   }
 }
 
-const language = args.language || process.env.AI_COMMIT_LANGUAGE || "english";
-
-
-let template = args.template || process.env.AI_COMMIT_COMMIT_TEMPLATE;
-
-
+const language = args.language || secrets.AI_COMMIT_LANGUAGE || "english";
+let template = args.template || secrets.AI_COMMIT_COMMIT_TEMPLATE;
 const commitType = args["commit-type"];
-
 const provider = PROVIDER_SUPPORT[AI_PROVIDER] || gemini;
-
 const customMessageConvention = args["custom-conventions"];
 
 const processTemplate = ({ template, commitMessage }) => {
-  // Remove code block markers from the commit message
   commitMessage = commitMessage.replace(/```[a-z]*\n|\n```/g, '');
 
   if (!template.includes("COMMIT_MESSAGE")) {
@@ -112,8 +105,6 @@ const generateSingleCommit = async (diff) => {
       template: args.template,
       commitMessage: finalCommitMessage,
     });
-
-    // Remove this line as it's removing useful markdown formatting from console output
     
     console.log(
       `Proposed Commit With Template:\n------------------------------\n${finalCommitMessage}\n------------------------------`
@@ -124,8 +115,6 @@ const generateSingleCommit = async (diff) => {
     );
   }
 
-  
-
   if (args.force) {
     makeCommit(finalCommitMessage);
     return;
@@ -134,7 +123,7 @@ const generateSingleCommit = async (diff) => {
   const answer = await inquirer.prompt([
     {
       type: "confirm",
-      name: "continue",
+      name: "continue", 
       message: "Do you want to continue?",
       default: true,
     },
@@ -180,7 +169,6 @@ const generateListCommits = async (diff, numOptions = 5) => {
     );
   }
 
-  // add regenerate option
   msgs.push(REGENERATE_MSG);
 
   const answer = await inquirer.prompt([
@@ -200,7 +188,6 @@ const generateListCommits = async (diff, numOptions = 5) => {
   makeCommit(answer.commit);
 };
 
-// Add this function after imports
 const filterLockFiles = (diff) => {
   const lines = diff.split("\n");
   let isLockFile = false;
@@ -231,18 +218,15 @@ async function generateAICommit() {
 
   let diff = execSync("git diff --staged").toString();
 
-  // Filter lock files
   const originalDiff = diff;
   diff = filterLockFiles(diff);
 
-  // Check if lock files were changed
   if (diff !== originalDiff) {
     console.log(
       "Changes detected in lock files. These changes will be included in the commit but won't be analyzed for commit message generation."
     );
   }
 
-  // Handle empty diff after filtering
   if (!diff.trim()) {
     console.log("No changes to commit except lock files 🙅");
     console.log(
