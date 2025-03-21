@@ -1,5 +1,5 @@
 Write a professional git commit message based on the template below
-using language{language}
+using language{language}, return the full setence without formatting
 
 aways use commit types with emoji and their meanings:
 - feat (✨): New feature (MINOR version)
@@ -12,6 +12,7 @@ aways use commit types with emoji and their meanings:
 - chore (🔨): Maintenance tasks
 
 Follow this commit message template structure:
+
 <emoji> <type>(<scope>): <short description>
 
 - <Bullet point describing each significant change>
