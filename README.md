@@ -85,3 +85,38 @@ We'd love for you to contribute to AI-Commit! Here's how:
 AI-Commit is licensed under the MIT License.
 
 ## Happy coding 🚀
+## Environment Variables Example
+
+Create a `.env` file in your project root:
+
+```bash
+# .env
+
+# Provider Configuration
+PROVIDER=gemini
+MODEL=gemini-2.0-flash
+
+# Google API Configuration
+GOOGLE_API_KEY=
+GOOGLE_API_BASE_URL=
+
+# OpenAI Configuration (optional fallback)
+# AI_COMMIT_API_KEY=your_openai_api_key
+
+    # Language and Template Settings
+AI_COMMIT_LANGUAGE=english
+    # AI_COMMIT_COMMIT_TEMPLATE="Modified {GIT_BRANCH} | {COMMIT_MESSAGE}"
+    # Optional Features
+    AI_COMMIT_ADD_EMOJI=true
+```
+
+## Usage
+
+```bash
+npm install -g ai-commit
+ai-commit
+```
+
+## How it Works
+
+1. Install AI-Commit using `npm install -g ai-commit`
