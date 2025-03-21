@@ -101,13 +101,15 @@ const generateSingleCommit = async (diff) => {
     });
 
     console.log(
-      `Proposed Commit With Template:\n------------------------------\n${finalCommitMessage.replace(/```[a-z]*\n|\n```/g, '')}\n------------------------------`
+      `Proposed Commit With Template:\n------------------------------\n${finalCommitMessage}\n------------------------------`
     );
   } else {
     console.log(
-      `Proposed Commit:\n------------------------------\n${finalCommitMessage.replace(/```[a-z]*\n|\n```/g, '')}\n------------------------------`
+      `Proposed Commit:\n------------------------------\n${finalCommitMessage}\n------------------------------`
     );
   }
+
+  
 
   if (args.force) {
     makeCommit(finalCommitMessage);
