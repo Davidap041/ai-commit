@@ -22,21 +22,18 @@ console.log("Ai provider: ", AI_PROVIDER);
 
 const ENDPOINT = args.ENDPOINT || process.env.ENDPOINT;
 
-const apiKey = args.apiKey || process.env.AI_COMMIT_API_KEY;
+// Remove OpenAI API key check and add Gemini check
+const apiKey = args.apiKey || process.env.GOOGLE_API_KEY;
 
 const language = args.language || process.env.AI_COMMIT_LANGUAGE || "english";
 
-if (AI_PROVIDER === "openai" && !apiKey) {
-  console.error("Please set the AI_COMMIT_API_KEY environment variable.");
-  process.exit(1);
-}
 
 let template = args.template || process.env.AI_COMMIT_COMMIT_TEMPLATE;
 const doAddEmoji = args.emoji || process.env.AI_COMMIT_ADD_EMOJI;
 
 const commitType = args["commit-type"];
 
-const provider = PROVIDER_SUPPORT[AI_PROVIDER] || openai;
+const provider = PROVIDER_SUPPORT[AI_PROVIDER] || gemini;
 
 const customMessageConvention = args["custom-conventions"];
 

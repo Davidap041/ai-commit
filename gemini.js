@@ -13,28 +13,33 @@ const gemini = {
     console.log("prompting Gemini API...");
     console.log("prompt: ", input);
 
+    const body = {
+      contents: [{
+        parts: [{
+          text: input
+        }]
+      }]
+    };
+    
+    console.log("Request body:", JSON.stringify(body, null, 2));
+
     const response = await fetch(
-      "https://openrouter.ai/api/v1/chat/completions",
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${apiKey}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          model,
-          messages: [
-            {
-              role: "user",
-              content: [{ type: "text", text: input }],
-            },
-          ],
-        }),
+        body: JSON.stringify(body),
       }
     );
 
     const data = await response.json();
-    return data.choices?.[0]?.message?.content || "";
+    if (data.error) {
+      console.error("Error generating commit message: ", data.error);
+      return "";
+    }
+    return data.candidates?.[0]?.content?.parts?.[0]?.text || "";
   },
 
   getPromptForSingleCommit: (
