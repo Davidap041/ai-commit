@@ -13,8 +13,7 @@ function addGitmojiToCommitMessage(commitMessage) {
   // Extract the first alphabetic character of the commit message
   const match = commitMessage.match(/[a-zA-Z]+/);
   if(!match) return commitMessage;
-  const type = match[0];
-
+  const type = match[0].toLowerCase();
   // If the type is valid, add the corresponding gitmoji to the message
   if (typeToGitmoji[type]) {
     return `${typeToGitmoji[type]} ${commitMessage}`;

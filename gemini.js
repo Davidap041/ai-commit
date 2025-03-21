@@ -11,7 +11,7 @@ const gemini = {
     { apiKey, model = "google/gemini-2.0-flash-lite-preview-02-05:free" }
   ) => {
     console.log("prompting Gemini API...");
-    console.log("prompt: ", input);
+    //console.log("prompt: ", input);
 
     const body = {
       contents: [{
@@ -21,7 +21,7 @@ const gemini = {
       }]
     };
     
-    console.log("Request body:", JSON.stringify(body, null, 2));
+    // console.log("Request body:", JSON.stringify(body, null, 2));
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,

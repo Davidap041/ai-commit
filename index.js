@@ -29,7 +29,7 @@ const language = args.language || process.env.AI_COMMIT_LANGUAGE || "english";
 
 
 let template = args.template || process.env.AI_COMMIT_COMMIT_TEMPLATE;
-const doAddEmoji = args.emoji || process.env.AI_COMMIT_ADD_EMOJI;
+
 
 const commitType = args["commit-type"];
 
@@ -72,9 +72,9 @@ const makeCommit = (input) => {
 };
 
 const processEmoji = (msg, doAddEmoji) => {
-  if (doAddEmoji) {
-    return addGitmojiToCommitMessage(msg);
-  }
+  
+    console.log("Adding gitmoji to commit message ...", msg,doAddEmoji);
+    return addGitmojiToCommitMessage(msg);  
 
   return msg;
 };
@@ -89,7 +89,7 @@ const getPromptForSingleCommit = (diff) => {
 
 const generateSingleCommit = async (diff) => {
   const prompt = getPromptForSingleCommit(diff);
-  console.log(prompt);
+  //console.log(prompt);
   if (!(await provider.filterApi({ prompt, filterFee: args["filter-fee"] })))
     process.exit(1);
 
