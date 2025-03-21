@@ -2,6 +2,7 @@ import inquirer from "inquirer";
 import { AI_PROVIDER } from "./config.js";
 import { readFileSync } from 'fs';
 import { join } from 'path';
+const { commitMessageTemplate } = await import('./commit-message.js');
 
 const FEE_PER_1K_TOKENS = 0.0;
 const MAX_TOKENS = 1_000_000;
@@ -47,9 +48,7 @@ const gemini = {
   getPromptForSingleCommit: (
     diff,
     { commitType, customMessageConvention, language }
-  ) => {
-    const { commitMessageTemplate } = require('./commit-message.js');
-    
+  ) => {    
     return commitMessageTemplate
       .replace('{language}', language)
       .replace('{commitType}', commitType ? ` with commit type '${commitType}'` : '')
