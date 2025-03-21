@@ -85,35 +85,69 @@ We'd love for you to contribute to AI-Commit! Here's how:
 AI-Commit is licensed under the MIT License.
 
 ## Happy coding 🚀
-## Environment Variables Example
+## Installation
+
+### Step 1: Clone the Repository
+
+```bash
+# Clone the repository
+git clone https://github.com/davipaiva/ai-commit.git
+
+# Navigate to the project directory
+cd ai-commit
+```
+
+### Step 2: Install Dependencies and Install Globally
+
+```bash
+# Install project dependencies
+npm install
+
+# Install the package globally
+npm install -g .
+```
+
+### Step 3: Configure Environment Variables
 
 Create a `.env` file in your project root:
 
 ```bash
 # .env
 
-# Provider Configuration
-PROVIDER=gemini
-MODEL=gemini-2.0-flash
+# Provider Configuration (choose one)
+PROVIDER=openai  # or 'gemini' or 'ollama'
 
-# Google API Configuration
-GOOGLE_API_KEY=
-GOOGLE_API_BASE_URL=
+# For OpenAI
+AI_COMMIT_API_KEY=your_openai_api_key
 
-# OpenAI Configuration (optional fallback)
-# AI_COMMIT_API_KEY=your_openai_api_key
+# For Google/Gemini
+GOOGLE_API_KEY=your_google_api_key
 
-    # Language and Template Settings
+# For Ollama (local model)
+# No API key needed, just install Ollama from https://ollama.ai/
+
+# Optional Settings
 AI_COMMIT_LANGUAGE=english
-    # AI_COMMIT_COMMIT_TEMPLATE="Modified {GIT_BRANCH} | {COMMIT_MESSAGE}"
-    # Optional Features
-    AI_COMMIT_ADD_EMOJI=true
+AI_COMMIT_ADD_EMOJI=true
+# AI_COMMIT_COMMIT_TEMPLATE="Modified {GIT_BRANCH} | {COMMIT_MESSAGE}"
+```
+
+### Step 4: Verify Installation
+
+```bash
+# Test the global installation
+ai-commit --help
 ```
 
 ## Usage
 
+After installation, you can use ai-commit from any git repository:
+
 ```bash
-npm install -g ai-commit
+# Stage your changes
+git add .
+
+# Generate commit message
 ai-commit
 ```
 
