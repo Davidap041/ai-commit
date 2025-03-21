@@ -72,10 +72,6 @@ const makeCommit = (input) => {
 };
 
 const processEmoji = (msg, doAddEmoji) => {
-  
-    console.log("Adding gitmoji to commit message ...", msg,doAddEmoji);
-    return addGitmojiToCommitMessage(msg);  
-
   return msg;
 };
 

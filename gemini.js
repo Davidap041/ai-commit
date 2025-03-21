@@ -1,5 +1,7 @@
 import inquirer from "inquirer";
 import { AI_PROVIDER } from "./config.js";
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 const FEE_PER_1K_TOKENS = 0.0;
 const MAX_TOKENS = 1_000_000;
@@ -46,17 +48,13 @@ const gemini = {
     diff,
     { commitType, customMessageConvention, language }
   ) => {
-    return (
-      `Write a professional git commit message based on the diff below in ${language} language` +
-      (commitType ? ` with commit type '${commitType}'. ` : ". ") +
-      `${
-        customMessageConvention
-          ? `Apply these JSON formatted rules: ${customMessageConvention}.`
-          : ""
-      }` +
-      "Do not preface the commit with anything, use the present tense, return the full sentence and also commit type." +
-      `\n\n${diff}`
-    );
+    const template = readFileSync(join(process.cwd(), 'commit-messages.txt'), 'utf8');
+    
+    return template
+      .replace('{language}', language)
+      .replace('{commitType}', commitType ? ` with commit type '${commitType}'` : '')
+      .replace('{customRules}', customMessageConvention ? `Apply these JSON formatted rules: ${customMessageConvention}.` : '')
+      .replace('{diff}', diff);
   },
 
   getPromptForMultipleCommits: (
