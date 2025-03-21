@@ -38,9 +38,11 @@ const provider = PROVIDER_SUPPORT[AI_PROVIDER] || gemini;
 const customMessageConvention = args["custom-conventions"];
 
 const processTemplate = ({ template, commitMessage }) => {
+  // Remove code block markers from the commit message
+  commitMessage = commitMessage.replace(/```[a-z]*\n|\n```/g, '');
+
   if (!template.includes("COMMIT_MESSAGE")) {
     console.log(`Warning: template doesn't include {COMMIT_MESSAGE}`);
-
     return commitMessage;
   }
 
