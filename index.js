@@ -85,7 +85,6 @@ const getPromptForSingleCommit = (diff) => {
 
 const generateSingleCommit = async (diff) => {
   const prompt = getPromptForSingleCommit(diff);
-  //console.log(prompt);
   if (!(await provider.filterApi({ prompt, filterFee: args["filter-fee"] })))
     process.exit(1);
 
@@ -100,11 +99,11 @@ const generateSingleCommit = async (diff) => {
     });
 
     console.log(
-      `Proposed Commit With Template:\n------------------------------\n${finalCommitMessage}\n------------------------------`
+      `Proposed Commit With Template:\n------------------------------\n${finalCommitMessage.replace(/```[a-z]*\n|\n```/g, '')}\n------------------------------`
     );
   } else {
     console.log(
-      `Proposed Commit:\n------------------------------\n${finalCommitMessage}\n------------------------------`
+      `Proposed Commit:\n------------------------------\n${finalCommitMessage.replace(/```[a-z]*\n|\n```/g, '')}\n------------------------------`
     );
   }
 

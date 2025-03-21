@@ -1,12 +1,7 @@
-Write a professional git commit message based on the diff below in {language} language{commitType}. 
-{customRules}
+Write a professional git commit message based on the template below
+using language{language}
 
-Follow this commit message structure:
-<emoji> <type>(<scope>): <short description>
-
-- <Bullet point describing each significant change>
-
-Available commit types and their meanings:
+aways use commit types with emoji and their meanings:
 - feat (✨): New feature (MINOR version)
 - fix (🐛): Bug fix (PATCH version)
 - docs (📚): Documentation changes
@@ -15,6 +10,11 @@ Available commit types and their meanings:
 - build (🔧): Build system/dependencies
 - test (✅): Testing changes
 - chore (🔨): Maintenance tasks
+
+Follow this commit message template structure:
+<emoji> <type>(<scope>): <short description>
+
+- <Bullet point describing each significant change>
 
 
 Please analyze the following diff and generate a commit message that follows these conventions:
