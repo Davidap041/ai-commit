@@ -48,9 +48,9 @@ const gemini = {
     diff,
     { commitType, customMessageConvention, language }
   ) => {
-    const template = readFileSync(join(process.cwd(), 'commit-messages.txt'), 'utf8');
+    const { commitMessageTemplate } = require('./commit-message.js');
     
-    return template
+    return commitMessageTemplate
       .replace('{language}', language)
       .replace('{commitType}', commitType ? ` with commit type '${commitType}'` : '')
       .replace('{customRules}', customMessageConvention ? `Apply these JSON formatted rules: ${customMessageConvention}.` : '')
